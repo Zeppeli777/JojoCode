@@ -82,7 +82,7 @@ npm start
 | Agent 框架 | LangGraph + LangChain | 多步推理图编排 |
 | 模板引擎 | Handlebars | Prompt 模板管理 |
 | 终端 UI | Ink (React) | 富交互命令行界面 |
-| LLM Provider | Anthropic Claude | 可替换为其他 Provider |
+| LLM Provider | OpenAI | 可替换为其他 Provider |
 | 环境配置 | dotenv | 本地开发环境变量 |
 | 数据验证 | Zod | 运行时类型校验 |
 
@@ -92,8 +92,8 @@ npm start
 
 | 变量名 | 必填 | 说明 |
 |--------|------|------|
-| `ANTHROPIC_API_KEY` | ✅ | Anthropic API Key |
-| `MODEL_NAME` | ❌ | 模型名称，默认 `claude-opus-4-5` |
+| `OPENAI_API_KEY` | ✅ | OpenAI API Key |
+| `MODEL_NAME` | ❌ | 模型名称，默认 `gpt-4o` |
 | `MAX_ITERATIONS` | ❌ | Agent 最大推理轮数，默认 `10` |
 
 ---

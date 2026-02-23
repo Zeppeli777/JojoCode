@@ -1,13 +1,13 @@
-import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatOpenAI } from "@langchain/openai";
 import { SystemMessage, HumanMessage } from "@langchain/core/messages";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { AgentStateType } from "./state.js";
 import { allTools } from "../tools/index.js";
 import { renderTemplate } from "../utils/template.js";
 
-const model = new ChatAnthropic({
-  model: process.env.MODEL_NAME ?? "claude-opus-4-5",
-  apiKey: process.env.ANTHROPIC_API_KEY,
+const model = new ChatOpenAI({
+  model: process.env.MODEL_NAME ?? "gpt-4o",
+  apiKey: process.env.OPENAI_API_KEY,
 }).bindTools(allTools);
 
 /**
