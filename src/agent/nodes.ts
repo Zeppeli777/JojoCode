@@ -5,10 +5,32 @@ import { AgentStateType } from "./state.js";
 import { allTools } from "../tools/index.js";
 import { renderTemplate } from "../utils/template.js";
 
-const model = new ChatOpenAI({
-  model: process.env.MODEL_NAME ?? "gpt-4o",
-  apiKey: process.env.OPENAI_API_KEY,
-}).bindTools(allTools);
+let model:
+  | ReturnType<InstanceType<typeof ChatOpenAI>["bindTools"]>
+  | null = null;
+
+function getModel() {
+  if (model) return model;
+
+  const baseURL = process.env.OPENAI_BASE_URL ?? process.env.ARK_BASE_URL;
+  const apiKey = process.env.OPENAI_API_KEY ?? process.env.ARK_API_KEY;
+  const modelName = process.env.MODEL_NAME ?? "gpt-4o";
+
+  if (!apiKey) {
+    throw new Error(
+      "Missing API key: set OPENAI_API_KEY (preferred) or ARK_API_KEY in your environment/.env. " +
+        "If you're using .env, ensure the entrypoint imports 'dotenv/config' before importing the agent modules."
+    );
+  }
+
+  model = new ChatOpenAI({
+    model: modelName,
+    apiKey,
+    configuration: baseURL ? { baseURL } : undefined,
+  }).bindTools(allTools);
+
+  return model;
+}
 
 /**
  * 调用 LLM 的节点：生成 System Prompt、调用模型
@@ -24,7 +46,7 @@ export async function callModelNode(state: AgentStateType): Promise<Partial<Agen
       ? [new SystemMessage(systemPrompt), new HumanMessage(state.userInput)]
       : state.messages;
 
-  const response = await model.invoke(messages);
+  const response = await getModel().invoke(messages);
   return { messages: [response] };
 }
 

@@ -92,8 +92,9 @@ npm start
 
 | 变量名 | 必填 | 说明 |
 |--------|------|------|
-| `OPENAI_API_KEY` | ✅ | OpenAI API Key |
-| `MODEL_NAME` | ❌ | 模型名称，默认 `gpt-4o` |
+| `OPENAI_API_KEY` / `ARK_API_KEY` | ✅ | API Key（二选一即可，优先读取 `OPENAI_API_KEY`） |
+| `OPENAI_BASE_URL` / `ARK_BASE_URL` | ❌ | Base URL（如火山方舟 `https://ark.cn-beijing.volces.com/api/v3`） |
+| `MODEL_NAME` | ❌ | 模型名称，默认 `gpt-4o`（如 `doubao-seed-2-0-pro-260215`） |
 | `MAX_ITERATIONS` | ❌ | Agent 最大推理轮数，默认 `10` |
 
 ---
